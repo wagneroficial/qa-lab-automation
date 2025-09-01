@@ -1,0 +1,13 @@
+# .gitignore
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+.env
+reports/      
+screenshots/  
+*.png
+*.jpg
+.DS_Store
+node_modules/
