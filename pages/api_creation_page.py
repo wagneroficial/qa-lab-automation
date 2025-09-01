@@ -42,7 +42,6 @@ class ApiCreationPage(BasePage):
         self.page.get_by_role("button", name="Import").click()
         self.take_screenshot("11_import_clicked")
         
-        # Aguarda o processamento inicial do import
         self.page.wait_for_timeout(3000)
         self.take_screenshot("12_import_completed")
         
@@ -53,12 +52,10 @@ class ApiCreationPage(BasePage):
     def verify_api_created_successfully(self):
         self.logger.info("Verifying API created successfully")
 
-        # Espera até 2 minutos pela mensagem de sucesso
         success_message = self.page.get_by_text("Success", exact=True)
         expect(success_message).to_be_visible(timeout=120000)
         self.take_screenshot("15_success_verified")
 
-        # Espera até 2 minutos pela URL de detalhes
         self.page.wait_for_url("**/apis/details/**", timeout=120000)
         self.take_screenshot("14_api_details_page")
 
@@ -66,28 +63,28 @@ class ApiCreationPage(BasePage):
         self.logger.info("Verifying API created successfully")
         time.sleep(1)
 
-        # 🔹 Edit API
+        # Edit API
         self.page.get_by_role("button", name="edit").click()
         self.page.wait_for_url("**/apis/edit/**", timeout=120000)
         self.take_screenshot("16_edit_page")
         time.sleep(1)
-        # 🔹 Aba Docs and Terms
+        # tab Docs and Terms
         self.page.get_by_text("Docs and Terms").click()
         expect(self.page.get_by_text("Main Documentation:")).to_be_visible()
         self.take_screenshot("17_docs_terms_tab")
 
-        # 🔹 Aba HTTP Methods
+        # tab HTTP Methods
         self.page.get_by_text("HTTP Methods").click()
         expect(self.page.get_by_role("button", name="Add New Route")).to_be_visible()
         self.take_screenshot("18_http_methods_tab")
 
-        # 🔹 Aba Health Check
+        #tab Health Check
         self.page.get_by_text("Health Check", exact=True).click()
         self.page.get_by_role("button", name="Run Health Check").click()
         expect(self.page.get_by_role("columnheader", name="Backend Endpoint")).to_be_visible()
         self.take_screenshot("19_health_check_tab")
 
-        # 🔹 Aba OWASP Security Scan
+        # tab OWASP Security Scan
         self.page.get_by_text("OWASP").click()
         self.page.get_by_role("button", name="Scan for Vulnerabilities with").click()
         expect(self.page.get_by_role("heading", name="Security Issues")).to_be_visible(timeout=10000)
