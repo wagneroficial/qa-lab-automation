@@ -14,6 +14,12 @@ def pytest_configure(config):
     playwright_logger = logging.getLogger('playwright')
     playwright_logger.setLevel(logging.WARNING)
     
+    config.addinivalue_line("markers", "regression: Full regression test suite")
+    config.addinivalue_line("markers", "smoke: Essential quick tests")
+    config.addinivalue_line("markers", "admin: Admin user tests")
+    config.addinivalue_line("markers", "user: Regular user tests")
+    config.addinivalue_line("markers", "positive: Positive test cases")
+    config.addinivalue_line("markers", "negative: Negative test cases")
 
 
 @pytest.fixture(scope="session")
@@ -42,7 +48,7 @@ def context(browser: Browser):
     context.close()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function") 
 def page(context: BrowserContext):
     page = context.new_page()
     yield page

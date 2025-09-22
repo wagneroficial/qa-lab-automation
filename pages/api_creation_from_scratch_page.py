@@ -22,7 +22,7 @@ class ApiCreationFromScratchPage(BasePage):
         self.page.get_by_role("menuitem", name="APIs").click()
         self.take_screenshot("07_apis_section")
 
-    def create_pokemon_api_from_scratch(self):
+    def create_api_from_scratch(self):
         self.logger.info("Creating Pokemon API from scratch")
         
         # Click New button
@@ -126,99 +126,4 @@ class ApiCreationFromScratchPage(BasePage):
         self.take_screenshot("26_health_check_running")
         
 
-        
-        """ self._verify_api_full_functionality() """
-
-    """  def _verify_api_full_functionality(self):
-        self.logger.info("Starting full API verification")
-        time.sleep(1)
-        
-        # Edit API
-        self.logger.info("Testing Edit functionality")
-        self.page.get_by_role("button", name="edit").click()
-        self.page.wait_for_url("**/apis/edit/**", timeout=60000)
-        self.take_screenshot("28_edit_page")
-        
-        time.sleep(1)
-        
-        # Verify General tab (should be default)
-        expect(self.page.get_by_label("API Name:")).to_be_visible()
-        self.take_screenshot("29_general_tab")
-        
-        # Test Docs and Terms tab
-        self.logger.info("Testing Docs and Terms tab")
-        self.page.get_by_text("Docs and Terms").click()
-        expect(self.page.get_by_text("Main Documentation:")).to_be_visible()
-        self.take_screenshot("30_docs_terms_tab")
-        
-        # Test HTTP Methods tab
-        self.logger.info("Testing HTTP Methods tab")
-        self.page.get_by_text("HTTP Methods").click()
-        expect(self.page.get_by_role("button", name="Add New Route")).to_be_visible()
-        
-        # Verify our created route exists
-        expect(self.page.get_by_text("ditto")).to_be_visible()
-        self.take_screenshot("31_http_methods_tab")
-        
-        # Test Health Check tab (run again from edit page)
-        self.logger.info("Testing Health Check from edit page")
-        self.page.get_by_text("Health Check", exact=True).click()
-        
-        # Check if Run Health Check button is available and clickable
-        health_check_btn = self.page.get_by_role("button", name="Run Health Check")
-        if health_check_btn.is_visible():
-            health_check_btn.click()
-            time.sleep(3)  # Wait for results
-            self.take_screenshot("32_health_check_edit_page")
-        
-        # Test OWASP Security Scan tab
-        self.logger.info("Testing OWASP Security Scan")
-        self.page.get_by_text("OWASP").click()
-        
-        # Check if scan button exists and run scan
-        scan_btn = self.page.get_by_role("button", name="Scan for Vulnerabilities with")
-        if scan_btn.is_visible():
-            scan_btn.click()
-            
-            # Wait for security scan results
-            try:
-                expect(self.page.get_by_role("heading", name="Security Issues")).to_be_visible(timeout=15000)
-                self.take_screenshot("33_owasp_scan_completed")
-            except:
-                self.logger.warning("OWASP scan may have taken longer than expected")
-                self.take_screenshot("33_owasp_scan_timeout")
-        
-        self.logger.info("Pokemon API from scratch fully verified successfully ✅")
-        
-        # Additional verification: Check if we can navigate back to APIs list
-        self.logger.info("Verifying navigation back to APIs list")
-        self.page.get_by_role("menuitem", name="APIs").click()
-        time.sleep(1)
-        
-        # Look for our created API in the list
-        expect(self.page.get_by_text("API-Pokemon-Scratch")).to_be_visible(timeout=10000)
-        self.take_screenshot("34_api_in_list_verified")
-        
-        self.logger.info("Full verification completed successfully! 🎉")
-
-    def create_custom_api_from_scratch(self, api_name: str, api_type: str = "Public"):
-        self.logger.info(f"Creating custom API '{api_name}' from scratch")
-        
-        # Click New button
-        self.page.get_by_role("button", name="New").click()
-        self.take_screenshot(f"new_api_clicked_{api_name.lower().replace(' ', '_')}")
-        
-        # Select Create from Scratch
-        self.page.get_by_text("Create from Scratch").click()
-        
-        # Fill API details
-        self.page.get_by_label("API Name:").fill(api_name)
-        self.page.get_by_label("Type:").click()
-        self.page.get_by_text(api_type, exact=True).click()
-        
-        # Create API
-        self.page.get_by_role("button", name="Create").click()
-        
-        # Wait for success
-        expect(self.page.get_by_text("Success", exact=True)).to_be_visible(timeout=10000)
-        self.take_screenshot(f"api_created_{api_name.lower().replace(' ', '_')}") """
+    

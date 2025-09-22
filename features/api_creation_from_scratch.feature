@@ -5,9 +5,10 @@ Feature: API Creation from Scratch
 
     Background:
         Given I go to the login page
-        When I log in with valid admin credentials
-        Then I should be logged in successfully
-
+        When I log in with valid_admin credentials
+        Then I should see 'dashboard'
+        
+    @regression
     Scenario: Create Pokemon API from scratch successfully
         Given I am on the APIs section
         When I create a new Pokemon API from scratch
