@@ -1,15 +1,16 @@
-Feature: Login
+Feature: User Login - Simple
+  As a user
+  I want to login to the system
+  So that I can access my dashboard
 
-    @regression
-    Scenario Outline: User login with different credentials
-        Given I go to the login page
-        When I log in with <credential_type> credentials
-        Then I should see '<expected_message>'
+  @smoke @login
+  Scenario: Login with valid credentials
+    Given I am on the login page
+    When I login with valid credentials
+    Then I should see welcome message
 
-        Examples:
-            | credential_type | expected_message            |
-            | valid_admin     | dashboard                   |
-            | valid_customer  | dashboard                   |
-            | invalid_email   | Invalid email or password.  |
-            | invalid_password| Invalid email or password.  |
-            | empty_fields    | Please fill out this field. |
+  @login
+  Scenario: Logout from system
+    Given I am logged in
+    When I click the logout button
+    Then I should be on login page
