@@ -1,72 +1,54 @@
-# 🚀 QAP Automation 
+# 🤖 QA Lab Automation
 
-Test automation project for the QAP system using **Playwright** + **pytest-bdd**, implementing BDD (Behavior Driven Development) pattern with Page Object Model.
+Automação de testes para o sistema **qa-lab-inventory** usando **Playwright** + **pytest-bdd** com padrão BDD (Behavior Driven Development).
 
-## 📋 Table of Contents
+## 🛠 Tecnologias
 
-- [Technologies](#-technologies)
-- [Project Structure](#-project-structure)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Execution](#-execution)
-- [BDD Structure](#-bdd-structure)
-- [Screenshots](#-screenshots)
-- [Reports](#-reports)
-- [Contributing](#-contributing)
+- **[Playwright](https://playwright.dev/)** - Automação de navegadores moderna
+- **[pytest-bdd](https://pytest-bdd.readthedocs.io/)** - BDD para Python com Gherkin
+- **[pytest](https://pytest.org/)** - Framework de testes
+- **Python 3.12+**
 
-## 🛠 Technologies
-
-- **[Playwright](https://playwright.dev/)** - Modern and reliable browser automation
-- **[pytest-bdd](https://pytest-bdd.readthedocs.io/)** - BDD for Python with Gherkin
-- **[pytest](https://pytest.org/)** - Robust testing framework
-- **[python-dotenv](https://pypi.org/project/python-dotenv/)** - Environment variables management
-- **Python 3.12+** - Base language of the project
-
-## 📁 Project Structure
+## 📁 Estrutura do Projeto
 
 ```
-qap-automation/
+qa-lab-automation/
 ├── 📂 config/
 │   ├── __init__.py
-│   └── settings.py          # Centralized settings
+│   └── settings.py          # Configurações centralizadas
 ├── 📂 features/
-│   └── login.feature         # BDD scenarios in Gherkin
+│   ├── login.feature        # Cenários de login
+│   └── registration.feature # Cenários de registro
 ├── 📂 pages/
 │   ├── __init__.py
-│   ├── base_page.py         # Base class for Page Objects
-│   └── login_page.py        # Login page Page Object
+│   ├── base_page.py         # Classe base para Page Objects
+│   ├── login_page.py        # Page Object da tela de login
+│   └── registration_page.py # Page Object da tela de registro
 ├── 📂 steps/
 │   ├── __init__.py
-│   └── login_steps.py       # BDD steps implementation
+│   ├── login_steps.py       # Steps do login
+│   └── registration_steps.py # Steps do registro
 ├── 📂 tests/
 │   ├── __init__.py
-│   └── test_login.py        # Automated tests
-├── 📂 screenshots/          # Visual evidence (gitignored)
-├── 📂 reports/              # HTML reports (gitignored)
-├── .env                     # Environment variables (gitignored)
-├── .gitignore
-├── conftest.py              # pytest configurations
-├── pytest.ini              # pytest configuration
-├── requirements.txt         # Python dependencies
+│   ├── test_login.py        # Testes de login
+│   └── test_registration.py # Testes de registro
+├── 📂 screenshots/          # Evidências visuais
+├── 📂 reports/              # Relatórios HTML
+├── .env                     # Variáveis de ambiente
+├── conftest.py              # Configurações do pytest
+├── requirements.txt         # Dependências Python
 └── README.md
 ```
 
-## ⚙️ Prerequisites
+## 🚀 Instalação
 
-- **Python 3.12** or higher
-- **Git** for version control
-- **Operating System:** Linux, macOS or Windows
-
-## 🚀 Installation
-
-### 1. Clone the repository
+### 1. Clonar o repositório
 ```bash
-git clone https://gitlab.konneqt.io/konneqt/qa-team/qap-e2e.git
-cd qap-e2e
+git clone https://github.com/wagneroficial/qa-lab-automation.git
+cd qa-lab-automation
 ```
 
-### 2. Create virtual environment
+### 2. Criar ambiente virtual
 ```bash
 python -m venv venv
 
@@ -77,159 +59,46 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
-### 3. Install dependencies
+### 3. Instalar dependências
 ```bash
 pip install -r requirements.txt
-```
-
-### 4. Install Playwright browsers
-```bash
 playwright install
-playwright install-deps  # Linux: system dependencies
 ```
 
-## 🔧 Configuration
+## 🔧 Configuração
 
-### 1. .env File
-Create the `.env` file in the project root:
-
+### Arquivo .env
 ```bash
-# System URLs
-BASE_URL=https://your-application.com
-DASHBOARD_URL=https://your-application.com/dashboard
+# URL do sistema
+BASE_URL=http://localhost:3000
 
-# Test credentials - Admin
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=your_admin_password
+# Credenciais de teste
+TEST_EMAIL=teste@exemplo.com
+TEST_PASSWORD=123456
 
-# Test credentials - User
-USER_EMAIL=user@example.com  
-USER_PASSWORD=your_user_password
-
-# Browser settings
+# Configurações do navegador
 HEADLESS=false
 SLOW_MO=1000
-BROWSER_TIMEOUT=10000
 ```
 
-### 2. Configuration validation
-```bash
-# Test if configurations are correct
-python -c "from config.settings import settings; settings.validate(); print('✅ Valid configuration!')"
-```
+## 🎮 Execução
 
-## 🎮 Execution
-
-### Basic commands
 ```bash
-# Run all tests
+# Executar todos os testes
 pytest
 
-# Run specific tests
+# Executar testes específicos
 pytest tests/test_login.py
+pytest tests/test_registration.py
 
-# Verbose mode (detailed)
-pytest tests/test_login.py -v
+# Com relatório HTML
+pytest --html=reports/report.html
 
-# With prints output
-pytest tests/test_login.py -v -s
+# Modo verbose
+pytest -v
 
-# Run with HTML report
-pytest tests/test_login.py --html=reports/report.html
-
-# Run by tags
-pytest -m smoke      # Only critical tests
-pytest -m positive   # Only positive scenarios
-
-# Run specific scenarios by name (keyword)
-pytest -k "login"                    # Scenarios containing "login"
-pytest -k "success"                  # Scenarios containing "success"  
-pytest -k "Successful login"         # Exact scenario
-pytest -k "admin"                    # Admin-related scenarios
-pytest -k "credentials"              # Credential scenarios
-pytest -k "login and success"        # Scenarios with both words
-pytest -k "not failure"              # Scenarios that DON'T contain "failure"
+# Por tags
+pytest -m smoke       # Testes críticos
+pytest -m login       # Testes de login
+pytest -m registration # Testes de registro
 ```
-
-## 📸 Screenshots
-
-The framework automatically captures screenshots during execution:
-
-- **📁 Location:** `screenshots/`
-- **🔍 Debug:** Screenshots at key flow points
-- **💥 Failures:** Automatic screenshot when test fails
-
-## 📊 Reports
-
-### HTML Report
-```bash
-# Generate report
-pytest tests/test_login.py --html=reports/report.html
-
-# Open report
-firefox reports/report.html
-```
-
-### Report includes:
-- ✅ Test status (PASSED/FAILED)
-- ⏱️ Execution time
-- 📊 General statistics
-- 🔗 Links to screenshots
-- 📝 Detailed logs
-
-## 🏷️ Available Tags
-
-```bash
-@smoke      # Critical/essential tests
-@positive   # Success scenarios  
-@negative   # Failure scenarios
-@regression # Regression tests
-@api        # API-related tests
-@admin      # Admin functionalities
-@user       # User functionalities
-```
-
-## 🔒 Security
-
-- **Credentials:** Never commit `.env` (it's in `.gitignore`)
-- **Screenshots:** May contain sensitive data (also ignored)  
-- **Reports:** Check if they don't expose confidential information
-
-## 🐛 Troubleshooting
-
-### Issue: "Step definition not found"
-**Solution:** Check if the text in `.feature` exactly matches the `@given/@when/@then`
-
-### Issue: Browser doesn't open
-**Solution:** 
-```bash
-playwright install chromium
-# Linux
-sudo playwright install-deps
-```
-
-### Issue: Test timeouts
-**Solution:** Increase timeout in `.env`
-```bash
-BROWSER_TIMEOUT=15000
-```
-
-### Issue: Screenshots don't appear
-**Solution:** Check folder permissions
-```bash
-mkdir screenshots
-chmod 755 screenshots
-```
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a Merge Request
-
-
-
-**Developed by:** QA Team - Konneqt  
-**Repository:** https://gitlab.konneqt.io/konneqt/qa-team/qap-e2e
