@@ -5,7 +5,7 @@ load_dotenv()
 
 class Settings:
     # URLs
-    BASE_URL = os.getenv("BASE_URL") or "http://localhost:3000"
+    BASE_URL = os.getenv("BASE_URL") or "https://qa-lab-inventory.vercel.app"
     
     
     # Browser config
